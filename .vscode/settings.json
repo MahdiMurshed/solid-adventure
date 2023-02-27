@@ -1,0 +1,23 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "cSpell.words": [
+    "clsx",
+    "googleusercontent",
+    "mantine",
+    "nprogress",
+    "prismadb",
+    "tabler",
+    "tanstack",
+    "TCATAGORIES",
+    "TKEYS",
+    "toastify",
+    "TROLES",
+    "uistate",
+    "zustand"
+  ]
+}

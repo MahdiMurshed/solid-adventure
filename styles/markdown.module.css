@@ -1,0 +1,41 @@
+.App {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  flex: 1;
+}
+.wrapper {
+  width: 50%;
+  height: 90%;
+  outline: none;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.head {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+.textarea {
+  padding: 15px;
+  border: none;
+  outline: none !important;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-size: 16px;
+  resize: none;
+}
+.markdown {
+  padding: 15px;
+  border: 1px solid red;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  overflow-x: hidden;
+}

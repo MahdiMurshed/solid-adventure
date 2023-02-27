@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                   String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String?
+  email                String?    @unique
+  emailVerified        DateTime?
+  image                String?
+  accounts             Account[]
+  sessions             Session[]
+  role                 String?
+  reg                  String?    @unique
+  approved             Boolean    @default(false)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  supervisorMaterials  Material[] @relation(fields: [supervisorMaterialId], references: [id])
+  supervisorMaterialId String[]   @db.ObjectId
+  authorMaterials      Material[] @relation("authors", fields: [authorMaterialId], references: [id])
+  authorMaterialId     String[]   @db.ObjectId
+  bio                  String?
+  links                Json?
+  contactNumber        String?
+  secondaryEmail       String?
+  addedCategories           Category[]
+  researchInterests    Tag[]      @relation("interests", fields: [researchInterestIds], references: [id])
+  researchInterestIds  String[]   @db.ObjectId
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String     @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  addedBy     String?    @db.ObjectId
+  addedByUser User?      @relation(fields: [addedBy], references: [id])
+  materials   Material[] @relation(fields: [materialIds], references: [id])
+  materialIds String[]   @db.ObjectId
+  tags        Tag[]
+}
+
+model Tag {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String     @unique
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  addedBy       String?    @db.ObjectId
+  category      Category   @relation(fields: [categoryId], references: [id])
+  categoryId    String     @db.ObjectId
+  materials     Material[] @relation(fields: [materialIds], references: [id])
+  materialIds   String[]   @db.ObjectId
+  interested    User[]     @relation("interests", fields: [interestedIds], references: [id])
+  interestedIds String[]   @db.ObjectId
+}
+
+model Material {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  abstract       String
+  markdownString String?
+  supervisorId   String[]   @db.ObjectId
+  supervisors    User[]     @relation(fields: [supervisorId], references: [id])
+  dateStarted    DateTime?
+  dateFinished   DateTime?
+  tags           Tag[]      @relation(fields: [tagId], references: [id])
+  tagId          String[]   @db.ObjectId
+  categories     Category[] @relation(fields: [categoryId], references: [id])
+  categoryId     String[]   @db.ObjectId
+  status         String     @default("IN_PROGRESS")
+  links          Json
+  files          Json
+  authorId       String[]   @db.ObjectId
+  authors        User[]     @relation("authors", fields: [authorId], references: [id])
+  approved       Boolean    @default(false)
+  uploadedBy     String?    @db.ObjectId
+}
+
+model TopResearch {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  materialId String   @unique @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  position   Int?
+}

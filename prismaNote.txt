@@ -1,0 +1,5 @@
+npm add prisma --save-dev
+// for changing table
+npx prisma generate
+// for see table in web
+npx prisma studio
