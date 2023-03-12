@@ -35,29 +35,30 @@ model Session {
 }
 
 model User {
-  id                   String     @id @default(auto()) @map("_id") @db.ObjectId
-  name                 String?
-  email                String?    @unique
-  emailVerified        DateTime?
-  image                String?
-  accounts             Account[]
-  sessions             Session[]
-  role                 String?
-  reg                  String?    @unique
-  approved             Boolean    @default(false)
-  createdAt            DateTime   @default(now())
-  updatedAt            DateTime   @updatedAt
-  supervisorMaterials  Material[] @relation(fields: [supervisorMaterialId], references: [id])
-  supervisorMaterialId String[]   @db.ObjectId
-  authorMaterials      Material[] @relation("authors", fields: [authorMaterialId], references: [id])
-  authorMaterialId     String[]   @db.ObjectId
-  bio                  String?
-  links                Json?
-  contactNumber        String?
-  secondaryEmail       String?
-  addedCategories           Category[]
-  researchInterests    Tag[]      @relation("interests", fields: [researchInterestIds], references: [id])
-  researchInterestIds  String[]   @db.ObjectId
+  id                    String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String?
+  email                 String?    @unique
+  emailVerified         DateTime?
+  image                 String?
+  accounts              Account[]
+  sessions              Session[]
+  role                  String?
+  reg                   String?    @unique
+  approved              Boolean    @default(false)
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  supervisorMaterials   Material[] @relation(fields: [supervisorMaterialIds], references: [id])
+  supervisorMaterialIds String[]   @db.ObjectId
+  authorMaterials       Material[] @relation("authors", fields: [authorMaterialIds], references: [id])
+  authorMaterialIds     String[]   @db.ObjectId
+  bio                   String?
+  links                 Json?
+  contactNumber         String?
+  secondaryEmail        String?
+  addedCategories       Category[]
+  researchInterests     Tag[]      @relation("interests", fields: [researchInterestIds], references: [id])
+  researchInterestIds   String[]   @db.ObjectId
+  notices               Notice[]
 }
 
 model VerificationToken {
@@ -87,7 +88,7 @@ model Tag {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   addedBy       String?    @db.ObjectId
-  category      Category   @relation(fields: [categoryId], references: [id])
+  category      Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId    String     @db.ObjectId
   materials     Material[] @relation(fields: [materialIds], references: [id])
   materialIds   String[]   @db.ObjectId
@@ -123,4 +124,15 @@ model TopResearch {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   position   Int?
+}
+
+model Notice {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  postedBy   String?  @db.ObjectId
+  postedUser User?    @relation(fields: [postedBy], references: [id])
+  isPinned   Boolean  @default(false)
 }

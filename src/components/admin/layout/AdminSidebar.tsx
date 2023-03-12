@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import {
   IconAdjustments,
+  IconBook,
   IconCalendarStats,
   IconGauge,
   IconLock,
@@ -171,7 +172,27 @@ export default function AdminSidebar() {
             onClick={() => null}
             className={clsx(
               classes.control,
-              "/admin/dashboard" === router.pathname && classes.linkActive
+              "/admin/create-notice" === router.pathname
+                ? classes.linkActive
+                : ""
+            )}
+          >
+            <Link href="/admin/create-notice">
+              <Group position="apart" spacing={0}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ThemeIcon variant="light" size={30}>
+                    <IconBook size={18} />
+                  </ThemeIcon>
+                  <Box ml="md">Create Notices</Box>
+                </Box>
+              </Group>
+            </Link>
+          </UnstyledButton>
+          <UnstyledButton
+            onClick={() => null}
+            className={clsx(
+              classes.control,
+              "/admin/dashboard" === router.pathname ? classes.linkActive : ""
             )}
           >
             <Link href="/admin/dashboard">
@@ -181,6 +202,24 @@ export default function AdminSidebar() {
                     <IconGauge size={18} />
                   </ThemeIcon>
                   <Box ml="md">Dashboard</Box>
+                </Box>
+              </Group>
+            </Link>
+          </UnstyledButton>
+          <UnstyledButton
+            onClick={() => null}
+            className={clsx(
+              classes.control,
+              "/admin/notices" === router.pathname ? classes.linkActive : ""
+            )}
+          >
+            <Link href="/admin/notices">
+              <Group position="apart" spacing={0}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ThemeIcon variant="light" size={30}>
+                    <IconBook size={18} />
+                  </ThemeIcon>
+                  <Box ml="md">Notices</Box>
                 </Box>
               </Group>
             </Link>

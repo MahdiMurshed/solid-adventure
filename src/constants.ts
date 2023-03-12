@@ -116,6 +116,10 @@ export const links = [
     link: "/materials",
     label: "Materials",
   },
+  {
+    link: "/notices",
+    label: "Notices",
+  },
 ];
 
 export const SUPERVISORS = [

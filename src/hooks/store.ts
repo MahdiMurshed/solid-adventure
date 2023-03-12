@@ -22,7 +22,6 @@ const initialState = {
 };
 
 const fileState = {
-  label: "",
   file: null,
 };
 const linkState = {
@@ -92,11 +91,12 @@ const useMaterialAddStore = create<IMaterialAddState>((set, get) => ({
     let filesWithUrl = [];
 
     for (let i = 0; i < files.length; i++) {
+      console.log(files[i].file?.name);
       if (files[i].file) {
         const data: any = await uploadFileCallBack(files[i].file);
         console.log({ data });
         filesWithUrl.push({
-          label: files[i].label,
+          label: files[i]?.file?.name,
           url: data.data.link,
         });
       }

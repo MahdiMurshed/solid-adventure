@@ -1,7 +1,6 @@
 import CustomButton from "@components/CustomButton";
 import { useMaterialAdd, useValues } from "@hooks/store";
 import useCategories from "@hooks/useCategories";
-import useTags from "@hooks/useTags";
 import { useStudents, useTeachers } from "@hooks/user";
 import {
   LoadingOverlay,
@@ -31,7 +30,6 @@ export default function MaterialUpload() {
   const { teachers, isLoading: teachersAreLoading } = useTeachers(true);
   const { students, isLoading: studentsAreLoading } = useStudents(true);
   const { categories, isLoading: categoriesLoading } = useCategories();
-  const { tags: tagsData, isLoading: tagLoading } = useTags();
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,14 +57,9 @@ export default function MaterialUpload() {
         categories?.find((cat) => cat.id === values.category)?.tags ?? []
       )
     );
-  }, [categories, tags, tagsData, values.category]);
+  }, [categories, values.category]);
 
-  if (
-    teachersAreLoading ||
-    studentsAreLoading ||
-    categoriesLoading ||
-    tagLoading
-  )
+  if (teachersAreLoading || studentsAreLoading || categoriesLoading)
     return <LoadingOverlay visible={true} />;
 
   return (

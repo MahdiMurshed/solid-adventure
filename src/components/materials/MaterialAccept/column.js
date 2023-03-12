@@ -42,25 +42,21 @@ const ActionOnMaterial = ({ material }) => {
   // console.log(user);
   const handleMaterialAccept = useCallback(async () => {
     toggleLoading();
-    const toastId = toast.loading("Rejecting user request");
 
     try {
       await axios.patch(`/requests/materials/accept`, {
         materialIds: [material.id],
       }),
-        toast.success("User rejected Successfully");
+        toast.success("Material accepted Successfully");
       queryClient.invalidateQueries({ queryKey: ["materials", "nonApproved"] });
     } catch (err) {
       console.log({ err });
-      toast.error("Rejection failed!");
     }
-    toast.dismiss(toastId);
+
     toggleLoading();
   }, [material.id, queryClient]);
 
   const handleUserDelete = useCallback(async () => {
-    const toastId = toast.loading("Rejecting user request");
-
     try {
       const url = `/requests/materials/reject`;
       await axios.patch(url, {
@@ -72,7 +68,6 @@ const ActionOnMaterial = ({ material }) => {
       console.log({ err });
       toast.error("Rejection failed!");
     }
-    toast.dismiss(toastId);
     toggleOpened();
   }, [material.id, queryClient]);
   return (

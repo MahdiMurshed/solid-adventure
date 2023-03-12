@@ -46,6 +46,9 @@ export const Capitalizer = (name: string) =>
 
 export const timeAgo = (time: string) => moment(time).fromNow();
 
+export const timeFormatter = (time: string) =>
+  moment(time).format("MMMM Do YYYY, h:mm");
+
 const KEYS = {
   STUDENT: "student",
   TEACHER: "teacher",

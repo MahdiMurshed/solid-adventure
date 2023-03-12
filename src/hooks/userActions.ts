@@ -23,6 +23,34 @@ export const useUserActions = ({ userIds }: { userIds: string[] }) => {
     setLoading(false);
   }, [invalidate, userIds]);
 
+  const handleMaterialsAccept = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      await axios.patch(`/requests/materials/accept`, {
+        materialIds: userIds,
+      }),
+        toast.success("Accepted Successfully");
+      invalidate(["materials", "nonApproved"]);
+    } catch (err) {
+      console.log({ err });
+    }
+    setLoading(false);
+  }, [userIds, invalidate]);
+  const handleMaterialsDelete = useCallback(async () => {
+    try {
+      const url = `/requests/materials/reject`;
+      await axios.patch(url, {
+        materialIds: userIds,
+      });
+      toast.success("Material rejected Successfully");
+      invalidate(["materials"]);
+    } catch (err) {
+      console.log({ err });
+    }
+    toggleOpened();
+  }, [invalidate, userIds]);
+
   const handleUserDelete = useCallback(async () => {
     const toastId = toast.loading("Rejecting user request");
     try {
@@ -45,5 +73,7 @@ export const useUserActions = ({ userIds }: { userIds: string[] }) => {
     toggleOpened,
     handleUserAccept,
     handleUserDelete,
+    handleMaterialsAccept,
+    handleMaterialsDelete,
   };
 };

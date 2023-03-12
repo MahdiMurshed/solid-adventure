@@ -5,6 +5,7 @@ import { Search } from "@components/layout/Search";
 import MaterialsWithCategory from "@components/materials/MaterialsWithCategory";
 import SearchResults from "@components/materials/SearchResults";
 import useCategories from "@hooks/useCategories";
+import { Highlight } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { Category } from "@prisma/client";
 import { useState } from "react";
@@ -22,9 +23,11 @@ const Material = () => {
       <div className="px-8 py-6 md:w-2/3 mx-auto">
         <div className="flex justify-between">
           <Heading variant="h1" className="border-b-0">
-            {showSearchResults
-              ? `Showing results for ${debounced}`
-              : "Browse all the materials"}
+            <Highlight highlight={debounced}>
+              {showSearchResults
+                ? `Showing results for ${debounced}`
+                : "Browse all the materials"}
+            </Highlight>
           </Heading>
           <Search
             searchQuery={searchQuery}

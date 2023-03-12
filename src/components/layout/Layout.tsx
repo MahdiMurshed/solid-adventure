@@ -38,7 +38,10 @@ export default function HeaderAction() {
     }
   };
 
-  const items = links.map((link) => {
+  const items = links.map((link, ind) => {
+    if (ind === 3 && !session) {
+      return;
+    }
     const menuItems = link.links?.map((item) => (
       <Menu.Item
         key={item.link}

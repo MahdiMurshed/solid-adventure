@@ -3,7 +3,7 @@ import CustomLoader from "@components/CustomLoader";
 import UserName from "@components/UserName";
 import Tab from "@components/materials/MaterialAdd/Tab";
 import { useMaterial } from "@hooks/material";
-import { Tooltip } from "@mantine/core";
+import { Mark, Tooltip } from "@mantine/core";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { MdCancel } from "react-icons/md";
@@ -39,10 +39,12 @@ const SingleMaterial = ({
         <Tooltip label="category" position="right-end" color="blue">
           <Link
             href={`/materials/categories/${categories[0]?.id ?? ""}`}
-            className="uppercase text-primary-blue text-xs font-semibold tracking-widest
+            className="uppercase  text-xs font-semibold tracking-widest
           leading-10"
           >
-            {categoryName}
+            <Mark color="blue" className="px-2 py-1">
+              {categoryName}
+            </Mark>
           </Link>
         </Tooltip>
         {isOnPreview && (
@@ -54,21 +56,21 @@ const SingleMaterial = ({
       </div>
       <h1 className="text-4xl pb-4">{title}</h1>
       {dateStarted && (
-        <span className="text-gray-600 text-sm pb-8 flex gap-2">
+        <span className="text-gray-600 text-sm pb-4 flex gap-2">
           <span>{dateFormatter(dateStarted) + " "}</span>
           {dateFinished && (
             <span>
               {" "}
               <span className="text-primary-blue font-semibold">
-                {"   "}
-                to{" "}
+                {"   "}-{" "}
               </span>{" "}
               {dateFormatter(dateFinished)}
             </span>
           )}
         </span>
       )}
-      <div className="flex gap-6 text-gray-700 text-sm py-4">
+
+      <div className="flex gap-6 text-gray-700 text-sm py-2">
         {[...supervisors, ...authors].map((author: User) => (
           <Link
             key={author.id}

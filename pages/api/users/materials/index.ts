@@ -23,7 +23,7 @@ export default async function handler(
       const authorMaterials = await prisma.material.findMany({
         where: {
           authorId: {
-            equals: userId,
+            has: userId as string,
           },
         },
         include: {
@@ -35,7 +35,7 @@ export default async function handler(
         const supervisorMaterials = await prisma.material.findMany({
           where: {
             supervisorId: {
-              equals: userId,
+              has: userId as string,
             },
           },
           include: {

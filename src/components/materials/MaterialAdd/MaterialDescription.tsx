@@ -26,8 +26,13 @@ const MaterialDescription = ({
         <div className="flex gap-6 py-6">
           {links.map(({ label, url }, index) => (
             <ul key={index} className="list-disc px-4">
-              <li className="hover:underline hover:text-primary-blue">
-                <Link href={url} target="_blank">
+              <li className="text-gray-600 hover:underline hover:text-primary-blue">
+                <Link
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-sm"
+                >
                   {label}
                 </Link>
               </li>

@@ -1,8 +1,10 @@
 import CustomLoader from "@components/CustomLoader";
 import Heading from "@components/Headings";
 import Layout from "@components/layout";
-import MaterialCard from "@components/materials/MaterialCard";
+import MaterialLargeCard from "@components/materials/MaterialLargeCard";
+
 import { useMaterialOfSpecificCategory } from "@hooks/materialOfSpecificCategory";
+import { Mark } from "@mantine/core";
 import { useRouter } from "next/router";
 
 const MaterialsWithSpecificCategory = () => {
@@ -21,12 +23,12 @@ const MaterialsWithSpecificCategory = () => {
     <Layout>
       <div className="w-2/3 mx-auto pt-10">
         <Heading variant="h1" className="mb-4">
-          Materials related to {categoryLabel}
+          Materials related to <Mark color="blue px-4">{categoryLabel}</Mark>
         </Heading>
 
         <div className="flex flex-wrap gap-6 ">
           {materials.map((material) => (
-            <MaterialCard key={material.id} materialId={material.id} />
+            <MaterialLargeCard key={material.id} materialId={material.id} />
           ))}
         </div>
       </div>

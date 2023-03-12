@@ -177,16 +177,25 @@ const MenuButton = ({ selectedRows }) => {
     usePathNameAttributes("requests");
   const { isOnSpecificPage: isOnAdminMaterialPage } =
     usePathNameAttributes("/admin/materials");
+  const { isOnSpecificPage: isOnTeacherPage } =
+    usePathNameAttributes("/users/me");
 
-  const { handleUserAccept, handleUserDelete, opened, toggleOpened } =
-    useUserActions({
-      userIds: selectedRows,
-    });
+  const {
+    handleUserAccept,
+    handleUserDelete,
+    opened,
+    toggleOpened,
+    handleMaterialsAccept,
+    handleMaterialsDelete,
+  } = useUserActions({
+    userIds: selectedRows,
+  });
   const { handleAddToTop } = useTopMaterialActions({
     materialIds: selectedRows,
   });
 
   // };
+  const showApproveButton = isOnRequestsPage || isOnTeacherPage;
   return (
     <Group position="right">
       <Menu
@@ -209,11 +218,13 @@ const MenuButton = ({ selectedRows }) => {
             marginLeft: "1rem",
           }}
         >
-          {isOnRequestsPage && (
+          {showApproveButton && (
             <Menu.Item
               color="teal"
               icon={<IconCheck />}
-              onClick={handleUserAccept}
+              onClick={
+                isOnTeacherPage ? handleMaterialsAccept : handleUserAccept
+              }
             >
               Approve all
             </Menu.Item>
@@ -237,8 +248,10 @@ const MenuButton = ({ selectedRows }) => {
       <ConfirmDeleteModal
         handleCancel={toggleOpened}
         opened={opened}
-        handleConfirm={handleUserDelete}
-        title={`Delete selected users ?`}
+        handleConfirm={
+          isOnTeacherPage ? handleMaterialsDelete : handleUserDelete
+        }
+        title={`Delete selected records ?`}
         description={"Are you sure?"}
         askToEnterCommitmentText={true}
       />

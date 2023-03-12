@@ -2,7 +2,14 @@
 import { ActivePageAttributes, useActivePage } from "@hooks/uistate";
 import useCurrentUser from "@hooks/useCurrentUser";
 import { Navbar, createStyles } from "@mantine/core";
-import { IconHome, IconNews, IconReceipt2, IconUser } from "@tabler/icons";
+import {
+  IconBook,
+  IconHome,
+  IconNews,
+  IconPlus,
+  IconReceipt2,
+  IconUser,
+} from "@tabler/icons";
 import Link from "next/link";
 import { ROLES } from "src/constants";
 
@@ -93,6 +100,8 @@ const data: ISidebarData[] = [
   { label: "Account", icon: IconUser },
   { label: "Materials", icon: IconReceipt2 },
   { label: "New Materials", icon: IconNews },
+  { label: "Notices", icon: IconBook },
+  { label: "Publish a Notice", icon: IconPlus },
 ];
 
 export function NavbarSimple() {
@@ -101,7 +110,7 @@ export function NavbarSimple() {
   const [activePage, setActivePage] = useActivePage();
 
   const links = data.map((item, index) => {
-    if (index === 2 && user.role !== ROLES.TEACHER) return null;
+    if (index >= 2 && user.role !== ROLES.TEACHER) return null;
     return (
       <a
         className={cx(classes.link, {

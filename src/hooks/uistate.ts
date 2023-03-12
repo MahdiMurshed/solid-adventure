@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { shallow } from "zustand/shallow";
 
-export type ActivePageAttributes = "Account" | "Materials" | "New Materials";
+export type ActivePageAttributes =
+  | "Account"
+  | "Materials"
+  | "New Materials"
+  | "Publish a Notice"
+  | "Notices";
 
 interface IActiveState {
   activePage: ActivePageAttributes;

@@ -1,6 +1,6 @@
 import { useMaterialOfSpecificCategory } from "@hooks/materialOfSpecificCategory";
 import { Carousel } from "@mantine/carousel";
-import { Loader } from "@mantine/core";
+import { Loader, Mark } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { IconClick } from "@tabler/icons";
 import Link from "next/link";
@@ -28,7 +28,11 @@ const MaterialsWithCategory = ({
   return (
     <div className="pb-6 ">
       <div className="flex justify-between items-center border-b-[1px] border-primary-blue/20 pb-2  mb-4 px-2 md:flex-wrap">
-        <h1 className="text-2xl  font-semibold">{name}</h1>
+        <h1 className="text-2xl  font-semibold">
+          <Mark color="blue" className="p-1 rounded-lg px-2">
+            {name}
+          </Mark>
+        </h1>
         <Link
           href={`/materials/categories/${id}`}
           className="text-primary-blue/90 flex gap-2 items-center"

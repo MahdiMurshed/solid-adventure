@@ -1,4 +1,5 @@
 import { Card, Text } from "@mantine/core";
+import { HiDownload } from "react-icons/hi";
 import { ILink } from "src/types";
 
 export default function FileCard({ file }: { file: ILink }) {
@@ -12,13 +13,14 @@ export default function FileCard({ file }: { file: ILink }) {
       target="_blank"
       rel="noreferrer"
       download
-      className="w-72 bg-primary-blue text-white"
+      className="w-72"
     >
-      <Card.Section></Card.Section>
-
-      <Text weight={500} size="lg" mt="md">
-        {file.label}
-      </Text>
+      <Card.Section className="flex items-center justify-between p-4">
+        <Text weight={500} size="lg">
+          {file.label}
+        </Text>
+        <HiDownload className="h-6 w-6 mr-2" />
+      </Card.Section>
     </Card>
   );
 }

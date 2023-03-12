@@ -3,14 +3,14 @@ import useStyles from "@components/forms/styles";
 
 import { Box, Group, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconNumber, IconSelect } from "@tabler/icons";
+import { IconNumber } from "@tabler/icons";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import axios from "src/lib/axios";
 
-export const ROLES_ARRAY = ["teacher", "student", "admin"];
+export const ROLES_ARRAY = ["teacher", "student"];
 
 interface IValues {
   role: string;
@@ -32,6 +32,10 @@ function NewUserForm() {
 
     validate: {
       role: (value) => (ROLES_ARRAY.includes(value) ? null : "Invalid role"),
+      regNo: (value) =>
+        value.length === 10 && value.startsWith("201")
+          ? null
+          : "Invalid registration number",
     },
   });
 
@@ -54,17 +58,12 @@ function NewUserForm() {
 
   return (
     <div className={classes.container}>
-      <Box
-        className={classes.signInBox}
-
-        // className="border-8 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-10"
-      >
+      <Box className={classes.signInBox}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <p className={classes.title}>Sign Up</p>
           <p className={classes.description}>Fill up additional information</p>
 
           <Select
-            icon={<IconSelect size={24} />}
             placeholder="role"
             className={classes.textInputWrapper}
             withAsterisk

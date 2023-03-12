@@ -8,13 +8,7 @@ export default function MaterialCard({ materialId }: { materialId: string }) {
 
   if (isLoading) return <div>Loading...</div>;
   return (
-    <Card
-      shadow="sm"
-      px="lg"
-      radius="md"
-      withBorder
-      className="w-72 min-h-full"
-    >
+    <Card shadow="sm" px="lg" radius="md" withBorder className="w-72">
       <Group position="apart">
         <Link
           className="text-sm font-medium cursor-pointer "
@@ -31,7 +25,7 @@ export default function MaterialCard({ materialId }: { materialId: string }) {
         </div>
       </Group>
 
-      <Spoiler showLabel="" maxHeight={120} hideLabel="Hide">
+      <Spoiler showLabel="" maxHeight={80} hideLabel="Hide">
         <Text size="xs" pt={8} color="dimmed">
           {material.abstract}
         </Text>
