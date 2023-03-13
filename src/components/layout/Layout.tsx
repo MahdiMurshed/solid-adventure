@@ -1,4 +1,5 @@
 import CustomButton from "@components/CustomButton";
+import useCurrentUser from "@hooks/useCurrentUser";
 import { Burger, Center, Container, Group, Header, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons";
@@ -20,6 +21,7 @@ export default function HeaderAction() {
   const isOnLandingPage = pathname === "/";
 
   const { data: session } = useSession();
+  const { user } = useCurrentUser()
 
   // console.log(session);
 
@@ -38,8 +40,10 @@ export default function HeaderAction() {
     }
   };
 
+  
+
   const items = links.map((link, ind) => {
-    if ((ind === 3 || ind === 4) && !session) {
+    if ((ind === 3 || ind === 4) && !user?.approved) {
       return;
     }
     const menuItems = link.links?.map((item) => (

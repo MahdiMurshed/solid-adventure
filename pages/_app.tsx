@@ -15,13 +15,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "styles/globals.css";
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 20, // 2 minutes
-    },
-  },
-});
+export const queryClient = new QueryClient({});
 
 
 type AppProps = {
