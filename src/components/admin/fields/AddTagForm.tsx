@@ -1,6 +1,7 @@
 import CustomButton from "@components/CustomButton";
 import { CustomTextInput } from "@components/CustomInput";
 import useCategories from "@hooks/useCategories";
+import useCurrentUser from "@hooks/useCurrentUser";
 import { Box, Container, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,6 +19,8 @@ interface IEditForm {
 }
 
 const AddTagForm = ({ name, handleCancel, id, categoryId }: IEditForm) => {
+
+  const { user } = useCurrentUser();
   const form = useForm({
     initialValues: {
       name: name ?? "",
@@ -44,6 +47,7 @@ const AddTagForm = ({ name, handleCancel, id, categoryId }: IEditForm) => {
       await axios.post(key, {
         name: values.name,
         categoryId: values.category,
+        userId: user.id,
       });
 
       toast.success("Tag added Successfully");

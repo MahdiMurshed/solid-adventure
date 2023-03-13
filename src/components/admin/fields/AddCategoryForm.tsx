@@ -1,6 +1,7 @@
 import CustomButton from "@components/CustomButton";
 import { CustomTextInput } from "@components/CustomInput";
 import useCategories from "@hooks/useCategories";
+import useCurrentUser from "@hooks/useCurrentUser";
 import { Box, Container, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -33,6 +34,7 @@ const AddCategoryForm = ({
       },
     },
   });
+  const { user } = useCurrentUser();
 
   const transformer = (data: any) =>
     data.map((data: any) => ({
@@ -52,6 +54,7 @@ const AddCategoryForm = ({
     try {
       await axios.post(key, {
         name: values.name,
+        userId:user.id
       });
 
       toast.success("Category added Successfully");

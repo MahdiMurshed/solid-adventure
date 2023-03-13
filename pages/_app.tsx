@@ -18,16 +18,11 @@ import "styles/globals.css";
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 1, // 2 minutes
+      staleTime: 1000 * 20, // 2 minutes
     },
   },
 });
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   weight: ["300", "400", "500", "600", "700", "800"],
-//   variable: "--inter",
-// });
 
 type AppProps = {
   Component: Props["Component"];

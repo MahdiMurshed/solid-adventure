@@ -20,6 +20,9 @@ export default function Tab({ material }: { material: IMaterial }) {
     material.supervisorId.includes(user?.id);
 
   const isUploader = material?.uploadedBy === user?.id;  
+
+  const showEdit = isAuthor || isUploader;
+
   const hasReadMe = material.markdownString !== "";
   return (
     <Tabs defaultValue="first">
@@ -39,7 +42,7 @@ export default function Tab({ material }: { material: IMaterial }) {
             helperText
           )}
         </p>
-        {isAuthor || isUploader && (
+        {showEdit && (
           <Button
             size="sm"
             rightIcon={<IconPlus size={12} />}

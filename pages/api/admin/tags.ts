@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import { METHODS } from "pages/api/users";
-import { ROLES } from "src/constants";
 import prisma from "src/lib/prismadb";
 
 export default async function handler(
@@ -21,25 +19,12 @@ export default async function handler(
     }
 
     case METHODS.POST: {
-      const { name, categoryId } = req.body;
-      const session = await getSession({ req });
-      if (!session) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const currentUser = await prisma.user.findUnique({
-        where: {
-          email: session?.user?.email as string,
-        },
-      });
-      if (currentUser?.role !== ROLES.ADMIN) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
+      const { name, categoryId, userId } = req.body;
+    
       const tag = await prisma.tag.create({
         data: {
           name,
-          addedBy: currentUser.id,
+          addedBy: userId as string,
           category: {
             connect: { id: categoryId },
           },
@@ -60,19 +45,6 @@ export default async function handler(
     }
     case METHODS.PUT: {
       const { name, tagId, categoryId } = req.body;
-      const session = await getSession({ req });
-      if (!session) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const currentUser = await prisma.user.findUnique({
-        where: {
-          email: session?.user?.email as string,
-        },
-      });
-      if (currentUser?.role !== ROLES.ADMIN) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
 
       const category = await prisma.tag.update({
         where: {
