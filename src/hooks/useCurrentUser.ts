@@ -24,6 +24,7 @@ const useCurrentUser = () => {
   return {
     user: data as User,
     isLoading,
+    status
   };
 };
 
