@@ -1,3 +1,4 @@
+import CustomLoader from "@components/CustomLoader";
 import Layout from "@components/layout";
 import MaterialUpload from "@components/materials/MaterialAdd/MaterialUpload";
 import useCurrentUser from "@hooks/useCurrentUser";
@@ -14,7 +15,7 @@ const SubmitMaterial = () => {
       router.push("/");
     }
   }, [isLoading, router, user?.approved]);
-  if (isLoading || !user?.approved) return null;
+  if (isLoading || !user?.approved) return <CustomLoader/>;
   return (
     <Layout>
       <div className=" bg-primary-bg min-h-screen pt-10">

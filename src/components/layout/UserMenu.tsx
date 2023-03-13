@@ -2,25 +2,25 @@ import { useActivePage } from "@hooks/uistate";
 import useCurrentUser from "@hooks/useCurrentUser";
 import {
   Avatar,
-  Burger,
-  Group,
+  Burger, createStyles, Group,
   Menu,
   Text,
-  UnstyledButton,
-  createStyles,
+  UnstyledButton
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
+  IconAppWindow,
   IconChevronDown,
   IconChevronRight,
   IconLogout,
   IconSettings,
-  IconTrash,
+  IconTrash
 } from "@tabler/icons";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { ROLES } from "src/constants";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -114,6 +114,7 @@ export default function AccountDetails({
     return null;
   }
   const name = user.name?.split(" ").slice(0, 2).join(" ") || "User";
+  const role = user?.role
 
   return (
     <div>
@@ -164,6 +165,14 @@ export default function AccountDetails({
           >
             My materials
           </Menu.Item>
+          {role===ROLES.ADMIN && <Menu.Item
+            icon={<IconAppWindow size={14} stroke={1.5} />}
+            onClick={() => {
+              router.push("/admin/dashboard");
+            }}
+          >
+            Admin Panel
+          </Menu.Item>}
 
           <Menu.Divider />
           <Menu.Label>Settings</Menu.Label>

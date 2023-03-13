@@ -8,8 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { MouseEvent } from "react";
 import { links } from "src/constants";
-import AccountDetails from "./UserMenu";
 import useStyles, { HEADER_HEIGHT } from "./styles";
+import AccountDetails from "./UserMenu";
 
 export default function HeaderAction() {
   const { classes } = useStyles();
@@ -39,7 +39,7 @@ export default function HeaderAction() {
   };
 
   const items = links.map((link, ind) => {
-    if (ind === 3 && !session) {
+    if ((ind === 3 || ind === 4) && !session) {
       return;
     }
     const menuItems = link.links?.map((item) => (
@@ -99,7 +99,9 @@ export default function HeaderAction() {
           </Group>
         </Group>
         {session ? (
+          
           <AccountDetails />
+        
         ) : (
           <>
             <CustomButton handleSubmit={() => signIn("google")}>

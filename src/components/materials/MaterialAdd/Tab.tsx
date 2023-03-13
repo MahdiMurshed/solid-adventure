@@ -3,9 +3,9 @@ import { Button, Modal, Tabs } from "@mantine/core";
 import { IconMessageCircle, IconPhoto, IconPlus } from "@tabler/icons";
 import { useReducer } from "react";
 import { IMaterial } from "src/types";
+import LiveMarkdown from "./markdown-editor";
 import MarkdownViewer from "./MarkdownEditor";
 import MaterialDescription from "./MaterialDescription";
-import LiveMarkdown from "./markdown-editor";
 
 const helperText =
   "Thank you for uploading your material to our research archive. To make your paper even more informative and accessible, we invite you to create a customized 'readme.md' file. This file will allow you to provide a brief overview, background information, and any other relevant details about your paper. Simply click the 'Create Readme' button below to navigate to the markdown editor and start crafting your readme.md file.";
@@ -18,6 +18,8 @@ export default function Tab({ material }: { material: IMaterial }) {
   const isAuthor =
     material.authorId.includes(user?.id) ||
     material.supervisorId.includes(user?.id);
+
+  const isUploader = material?.uploadedBy === user?.id;  
   const hasReadMe = material.markdownString !== "";
   return (
     <Tabs defaultValue="first">
@@ -37,7 +39,7 @@ export default function Tab({ material }: { material: IMaterial }) {
             helperText
           )}
         </p>
-        {isAuthor && (
+        {isAuthor || isUploader && (
           <Button
             size="sm"
             rightIcon={<IconPlus size={12} />}

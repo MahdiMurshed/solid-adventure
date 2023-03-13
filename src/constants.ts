@@ -117,6 +117,10 @@ export const links = [
     label: "Materials",
   },
   {
+    link: "/submit-material",
+    label: "Add Materials",
+  },
+  {
     link: "/notices",
     label: "Notices",
   },

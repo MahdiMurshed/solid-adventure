@@ -6,9 +6,7 @@ import {
   LoadingOverlay,
   MultiSelect,
   Paper,
-  Select,
-  TextInput,
-  Textarea,
+  Select, Textarea, TextInput
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { IconChevronDown } from "@tabler/icons";
@@ -57,7 +55,7 @@ export default function MaterialUpload() {
         categories?.find((cat) => cat.id === values.category)?.tags ?? []
       )
     );
-  }, [categories, values.category]);
+  }, [values.category]);
 
   if (teachersAreLoading || studentsAreLoading || categoriesLoading)
     return <LoadingOverlay visible={true} />;
@@ -143,10 +141,10 @@ export default function MaterialUpload() {
             onChange={(value) => setValues({ value, type: "category" })}
             searchable
             className="flex-1 "
-            label="Discipline(s)"
+            label="Research focus"
             radius="md"
             size="md"
-            placeholder="Enter discipline(s)"
+            placeholder="Research focus"
             rightSection={<IconChevronDown size={14} />}
             styles={{ rightSection: { pointerEvents: "none" } }}
             rightSectionWidth={40}
@@ -161,7 +159,7 @@ export default function MaterialUpload() {
             label="Tags"
             radius="md"
             size="md"
-            placeholder="Enter discipline(s)"
+            placeholder="Enter tag(s)"
             rightSection={<IconChevronDown size={14} />}
             styles={{ rightSection: { pointerEvents: "none" } }}
             rightSectionWidth={40}

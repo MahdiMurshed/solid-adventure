@@ -1,5 +1,6 @@
 import { IMaterialAddState } from "@hooks/store";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 import prisma from "src/lib/prismadb";
 import { METHODS } from "../users";
 
@@ -37,6 +38,12 @@ export default async function handler(
     }
     case METHODS.POST: {
       const { values, links, files } = req.body;
+      const session= await getSession({ req });
+      const user = await prisma.user.findUnique({
+        where: {
+          email: session?.user?.email as string,
+        },
+      })
 
       console.log({ files });
 
@@ -63,6 +70,7 @@ export default async function handler(
           links,
           files,
           markdownString: "",
+          uploadedBy: user?.id
         },
         include: {
           authors: true,

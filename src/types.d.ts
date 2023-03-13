@@ -61,6 +61,7 @@ interface IEditInfo {
 }
 
 export interface IMaterial {
+  uploadedBy: string;
   id: string;
   title: string;
   abstract: string;
