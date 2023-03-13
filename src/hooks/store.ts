@@ -56,7 +56,7 @@ export interface IMaterialAddState {
       | "authors";
     value: string | Date | null | string[];
   }): void;
-  handleMaterialAdd: () => Promise<AxiosResponse<any, any>>;
+  handleMaterialAdd: (id:string) => Promise<AxiosResponse<any, any>>;
 }
 
 const useMaterialAddStore = create<IMaterialAddState>((set, get) => ({
@@ -83,7 +83,7 @@ const useMaterialAddStore = create<IMaterialAddState>((set, get) => ({
       files: [fileState],
       links: [linkState],
     })),
-  handleMaterialAdd: async () => {
+  handleMaterialAdd: async (id) => {
     const { values, files, links, authors, reset } = get();
 
     console.log({ values, files, links, authors });
@@ -108,6 +108,7 @@ const useMaterialAddStore = create<IMaterialAddState>((set, get) => ({
       files: filesWithUrl,
       links,
       authors,
+      userId:id,
     });
     // reset();
     return response;

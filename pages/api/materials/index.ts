@@ -1,6 +1,5 @@
 import { IMaterialAddState } from "@hooks/store";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import prisma from "src/lib/prismadb";
 import { METHODS } from "../users";
 
@@ -15,6 +14,7 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     links: TFile[];
     // links: IMaterialAddState["links"];
     markdown?: string;
+    userId?: string;
   };
 }
 
@@ -37,13 +37,8 @@ export default async function handler(
       return res.status(200).json({ materials });
     }
     case METHODS.POST: {
-      const { values, links, files } = req.body;
-      const session= await getSession({ req });
-      const user = await prisma.user.findUnique({
-        where: {
-          email: session?.user?.email as string,
-        },
-      })
+      const { values, links, files, userId } = req.body;
+    
 
       console.log({ files });
 
@@ -70,7 +65,7 @@ export default async function handler(
           links,
           files,
           markdownString: "",
-          uploadedBy: user?.id
+          uploadedBy: userId as string,
         },
         include: {
           authors: true,

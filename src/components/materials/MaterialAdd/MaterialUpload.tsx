@@ -1,6 +1,7 @@
 import CustomButton from "@components/CustomButton";
 import { useMaterialAdd, useValues } from "@hooks/store";
 import useCategories from "@hooks/useCategories";
+import useCurrentUser from "@hooks/useCurrentUser";
 import { useStudents, useTeachers } from "@hooks/user";
 import {
   LoadingOverlay,
@@ -23,6 +24,7 @@ export default function MaterialUpload() {
   const [loading, toggleLoading] = useReducer((state) => !state, false);
   const [values, setValues] = useValues();
   const handleMaterialAdd = useMaterialAdd();
+  const { user } = useCurrentUser();
   const [tags, setTags] = useState<string[]>([]);
   const router = useRouter();
   const { teachers, isLoading: teachersAreLoading } = useTeachers(true);
@@ -34,7 +36,7 @@ export default function MaterialUpload() {
       event.preventDefault();
       toggleLoading();
       try {
-        const response = await handleMaterialAdd();
+        const response = await handleMaterialAdd(user?.id);
         console.log({ response });
         toast.success("Added Successfully");
         toggleLoading();

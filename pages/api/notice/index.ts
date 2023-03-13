@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import prisma from "src/lib/prismadb";
 import { METHODS } from "../users";
 
@@ -8,6 +7,7 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     id?: string;
     title: string;
     body: string;
+    userId?:string
   };
 }
 
@@ -29,17 +29,9 @@ export default async function handler(
       return res.status(200).json({ notices });
     }
     case METHODS.POST: {
-      const { title, body } = req.body;
+      const { title, body,userId } = req.body;
 
-      const session = await getSession({ req });
-      if (!session) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const postedBy = await prisma.user.findUnique({
-        where: { email: session?.user?.email as string },
-        select: { id: true },
-      });
+      
 
       const notice = await prisma.notice.create({
         data: {
@@ -47,7 +39,7 @@ export default async function handler(
           body,
           postedUser: {
             connect: {
-              id: postedBy?.id,
+              id: userId,
             },
           },
         },

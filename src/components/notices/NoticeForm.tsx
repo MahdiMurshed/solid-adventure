@@ -1,4 +1,5 @@
 import CustomButton from "@components/CustomButton";
+import useCurrentUser from "@hooks/useCurrentUser";
 import { useInvalidate } from "@hooks/useInvalidate";
 import { Button, Group, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -16,6 +17,7 @@ type IProps = Partial<IForm> & {
   handleCancel?: () => void;
 };
 const NoticeForm = ({ title, body, id, handleCancel }: IProps) => {
+  const { user }=useCurrentUser()
   const form = useForm<IForm>({
     initialValues: {
       title: title ?? "",
@@ -56,7 +58,10 @@ const NoticeForm = ({ title, body, id, handleCancel }: IProps) => {
     }
 
     try {
-      const response = await axios.post("/notice", values);
+      const response = await axios.post("/notice", {
+        ...values,
+        userId:user?.id
+      });
       console.log(response);
       toast.success("Added Successfully");
     } catch (e) {
